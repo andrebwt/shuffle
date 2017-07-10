@@ -1,0 +1,12 @@
+DirectoryIndex index.php
+
+Options -MultiViews
+RewriteEngine On
+
+RewriteBase /shuffle/public
+
+RewriteCond %{REQUEST_FILENAME] !-d
+RewriteCond %{REQUEST_FILENAME] !-f
+
+RewriteRule ^(.+)$ index.php?url=$1 [QSA,L]
+
