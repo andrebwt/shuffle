@@ -4,19 +4,19 @@
 <head>
     <meta charset="UTF-8">
     <title>Test Features</title>
-    <link rel="stylesheet" type="text/css" href="../styles.css">
+    <link rel="stylesheet" type="text/css" href="../../styles.css">
     <script src="countdown.js"></script>
 </head>
 
 <body>
-<div class="login-page">
+<div class="global-style">
 
     <h1 class="page-heading">Test Countdown</h1>
     <div class="divider"></div>
 
     <div class="form">
 
-        <form class="login-form" action="..\..\controllers\tests\receiveAnswer.php" method="post">
+        <form action="..\..\..\controllers\tests\countdown\processAnswer.php" method="post">
 
             <input type="text" name="suppliedAnswer"/>
             <button type="submit">check answer</button>
