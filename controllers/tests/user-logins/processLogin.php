@@ -1,43 +1,49 @@
 <?php
-echo 'Processing login...' . '<br>';
+echo 'Processing login...' . '<br><br>';
 
-$email = $_POST["email"];
+$username = $_POST["username"];
 $password = $_POST["password"];
-$userExists = false;
 
-echo 'Email ' . $email . '<br>';
-echo 'Password: ';
-echo $password . '<br>';
+//$userExists = false;
+$passwordCorrect = false;
+
+echo 'username entered: ' . $username . '<br>';
+echo 'password entered: ' . $password . '<br><br>';
+
+function userFound($xml, $username) {
+    $userExists = false;
+    foreach ($xml->children() as $user) {
+        if ($username == $user->username) {
+            $userExists = true;
+        }
+    }
+    return $userExists;
+}
+
+
 
 if(file_exists('../../../models/tests/user-logins/test-users.xml')){
+
     echo 'user database exists' . '<br>';
 
     $xml = new SimpleXMLElement('../../../models/tests/user-logins/test-users.xml', 0, true);
 
-    //print_r($xml) . '<br>';
-
-
-    /*
-    // loop through users and print
-    foreach ($xml->children() as $user) {
-        echo $user->email . '<br>';
-        echo $user->password . '<br>';
-    }
-    */
-
-    foreach ($xml->children() as $user) {
-        if ($email == $user->email) {
-            echo 'User Exists!' . '<br>';
-        } else {
-            echo 'User does not Exist!' . '<br>';
-        }
-    }
+    // Look for user
+    echo userFound($xml, $username) ? 'user ' . $username . ' was found.' . '<br>' :
+        'user ' . $username . ' not found!' . '<br>';
 
 /*
-    if($password == $xml->password) {
-        echo 'password good!';
+    if($userExists == true) {
+
+        // Refactor as function. DRY
+        foreach ($xml->children() as $user) {
+            if ($username == $user->username && $password == $user->password) {
+                echo '<br>' . 'password is good.';
+            } else if($username == $user->username && $password != $user->password) {
+                echo '<br>' . 'password is bad!';
+            }
+        }
     }
 */
-
 
 }
