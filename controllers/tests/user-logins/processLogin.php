@@ -1,13 +1,8 @@
-<?php header('user-page.php');
-
-    echo 'Processing login...' . '<br><br>';
+<?php
 
     $username = $_POST["username"];
     $password = $_POST["password"];
     $do_login = false;
-
-    echo 'username entered: ' . $username . '<br>';
-    echo 'password entered: ' . $password . '<br><br>';
 
     function userFound($xml, $username) {
         $userExists = false;
@@ -38,27 +33,6 @@
         }
     }
 
-    if(file_exists('../../../models/tests/user-logins/test-users.xml')){
-
-        echo 'user database exists' . '<br>';
-
-        $xml = new SimpleXMLElement('../../../models/tests/user-logins/test-users.xml', 0, true);
-
-        // If  user is found check the password is correct
-        if (userFound($xml, $username)){
-            $do_login = passCorrect($xml, $username, $password);
-        }
-
-        // If the username and password are correct, start a new session
-        if($do_login) {
-            echo '<br>' . 'Starting session...';
-
-            session_start();
-            $_SESSION['username'] = $username;
-            echo("<script>window.location = 'user-page.php';</script>");
-            die;
-        }
-}
 ?>
 
 <!DOCTYPE html>
@@ -67,11 +41,55 @@
     <head>
         <meta charset="UTF-8">
         <title>Test User Logins</title>
-        <link rel="stylesheet" type="text/css" href="../../styles.css">
+        <link rel="stylesheet" type="text/css" href="../../../views/styles.css">
     </head>
 
     <body>
-        <br><br>
-        <a href="../../../views/tests/user-logins/user-logins.html">Try Again</a>
+
+
+        <div class="status-info">
+
+            <input type="button" value = 'PROCESSING LOGIN...' style="background:#4CAF50;color: #FFFFFF">
+            <input type = "button" value="<?php echo 'username entered: ' . $username;?>">
+
+            <input type = "button" value="<?php echo 'password entered: ' . $password;?>" />
+
+            <?php
+            if(file_exists('../../../models/tests/user-logins/test-users.xml')){
+
+                //echo 'user database exists' . '<br>';
+                echo '<input type="button" value = "USER DATABASE EXISTS" style="background:#4CAF50;color: #FFFFFF">';
+
+                $xml = new SimpleXMLElement('../../../models/tests/user-logins/test-users.xml', 0, true);
+
+                // If  user is found check the password is correct
+                if (userFound($xml, $username)){
+                    $do_login = passCorrect($xml, $username, $password);
+                }
+
+                // If the username and password are correct, start a new session
+                if($do_login) {
+                    echo '<br>' . 'Starting session...';
+
+                    session_start();
+                    $_SESSION['username'] = $username;
+                    echo("<script>window.location = 'user-page.php';</script>");
+                    die;
+                }
+            }
+            ?>
+
+
+
+        </div>
+
+        <div class="status-info">
+            <button type="button" onclick="window.location='../../../views/tests/user-logins/user-logins.html';">
+                try again</button>
+        </div>
+
+
+
+    </body>
     </body>
 </html>
