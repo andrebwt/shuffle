@@ -58,40 +58,39 @@
             <input type = "button" value="<?php echo 'password entered: ' . $password;?>" />
 
             <?php
-            if(file_exists('../../../models/tests/user-logins/test-users.xml')){
+                if(file_exists('../../../models/tests/user-logins/test-users.xml')){
 
-                echo '<input type="button" value = "USER DATABASE EXISTS" style="background:#4CAF50;color: #FFFFFF">';
+                    echo '<input type="button" value = "USER DATABASE EXISTS" style="background:#4CAF50;color: #FFFFFF">';
 
-                $xml = new SimpleXMLElement('../../../models/tests/user-logins/test-users.xml', 0, true);
+                    $xml = new SimpleXMLElement('../../../models/tests/user-logins/test-users.xml', 0, true);
 
-                // Check user exists
-                if (userFound($xml, $username)){
-                    echo '<input type="button" value = "USER FOUND" style="background:#4CAF50;color: #FFFFFF">';
+                    // Check user exists
+                    if (userFound($xml, $username)){
+                        echo '<input type="button" value = "USER FOUND" style="background:#4CAF50;color: #FFFFFF">';
+                    } else {
+                        echo '<input type="button" value = "USER NOT FOUND!" style="background:darkred;color: #FFFFFF">';
+                    }
+
+                    // Login if the password is correct
+                    if ((userFound($xml, $username)) && (passCorrect($xml, $username, $password))){
+                        $do_login = true;
+                    }
+                    // Print message if the password entered is wrong
+                    if ((userFound($xml, $username)) && !(passCorrect($xml, $username, $password))) {
+                        echo '<input type="button" value = "WRONG PASSWORD!" style="background:darkred;color: #FFFFFF">';
+                    }
+
+                    // If the username and password are both correct, start a new session
+                    if($do_login) {
+
+                        session_start();
+                        $_SESSION['username'] = $username;
+                        echo("<script>window.location = 'user-page.php';</script>");
+                        die;
+                    }
                 } else {
-                    echo '<input type="button" value = "USER NOT FOUND!" style="background:darkred;color: #FFFFFF">';
+                    echo '<input type="button" value = "USER DATABASE NOT FOUND!" style="background:darkred;color: #FFFFFF">';
                 }
-
-                // Login if the password is correct
-                if ((userFound($xml, $username)) && (passCorrect($xml, $username, $password))){
-                    $do_login = true;
-                }
-                // Print message if the password entered is wrong
-                if ((userFound($xml, $username)) && !(passCorrect($xml, $username, $password))) {
-                    echo '<input type="button" value = "WRONG PASSWORD!" style="background:darkred;color: #FFFFFF">';
-                }
-
-                // If the username and password are both correct, start a new session
-                if($do_login) {
-                    echo '<br>' . 'Starting session...';
-
-                    session_start();
-                    $_SESSION['username'] = $username;
-                    echo("<script>window.location = 'user-page.php';</script>");
-                    die;
-                }
-            } else {
-                echo '<input type="button" value = "USER DATABASE NOT FOUND!" style="background:darkred;color: #FFFFFF">';
-            }
             ?>
         </div>
 
