@@ -22,16 +22,19 @@
 
     function passCorrect($xml, $username, $password) {
 
+        $goodPass = false;
         foreach ($xml->children() as $user) {
             if ($username == $user->username && $password == $user->password) {
-                return true;
-            } else if ($username == $user->username && $password != $user->password) {
-                echo '<input type="button" value = "WRONG PASSWORD!" style="background:darkred;color: #FFFFFF">';
-                return false;
+                $goodPass = true;
             }
         }
-    }
 
+        if ($goodPass) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 ?>
 
 <!DOCTYPE html>
@@ -61,15 +64,23 @@
 
                 $xml = new SimpleXMLElement('../../../models/tests/user-logins/test-users.xml', 0, true);
 
-                // If  user is found check the password is correct
+                // Check user exists
                 if (userFound($xml, $username)){
                     echo '<input type="button" value = "USER FOUND" style="background:#4CAF50;color: #FFFFFF">';
-                    $do_login = passCorrect($xml, $username, $password);
                 } else {
                     echo '<input type="button" value = "USER NOT FOUND!" style="background:darkred;color: #FFFFFF">';
                 }
 
-                // If the username and password are correct, start a new session
+                // Login if the password is correct
+                if ((userFound($xml, $username)) && (passCorrect($xml, $username, $password))){
+                    $do_login = true;
+                }
+                // Print message if the password entered is wrong
+                if ((userFound($xml, $username)) && !(passCorrect($xml, $username, $password))) {
+                    echo '<input type="button" value = "WRONG PASSWORD!" style="background:darkred;color: #FFFFFF">';
+                }
+
+                // If the username and password are both correct, start a new session
                 if($do_login) {
                     echo '<br>' . 'Starting session...';
 
