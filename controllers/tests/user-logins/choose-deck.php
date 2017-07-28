@@ -26,32 +26,36 @@ $activeDeck = $_SESSION['activeDeck'];
 <div class="status-info">
 
     <input type = "button" value="<?php echo $username . ' is logged in.';?>">
-    <input type = "button" value="<?php echo 'The active deck is: ' . $activeDeck;?>">
+    <div class="divider"></div>
+    <input type = "button" value="PLEASE CHOOSE YOUR DECK" style="background:#006db9; color: white">
 
 
 
 
+    <form action="../../../controllers/tests/user-logins/setDeck.php" method="post">
 
-    <?php
-    $deckLocation = '../../../models/tests/decks/';
+        <?php
+        $deckLocation = '../../../models/tests/decks/';
 
-    // Supress missing directory error
-    $decksDir = @opendir($deckLocation . $username . '/');
+        // Supress missing directory error
+        $decksDir = @opendir($deckLocation . $username . '/');
 
-    if($decksDir){
-        while(($deck = readdir($decksDir)) !== false){
-            if($deck != '.' && $deck != '..' && $deck != '.htaccess'){
+        if($decksDir){
+            while(($deck = readdir($decksDir)) !== false){
+                if($deck != '.' && $deck != '..' && $deck != '.htaccess'){
 
-                //echo "<button onclick=\"window.location='$deckLocation$userFolder$deck'\">$deck</button><br>";
-                echo "<button onclick=\"window.location='$deckLocation$userFolder$deck'\">$deck</button><br>";
+                    //echo "<button onclick=\"window.location='$deckLocation$userFolder$deck'\">$deck</button><br>";
+                    echo "<button type = submit name=\"active\" value = $deck onclick=\"window.location='setDeck.php'\">$deck</button><br> ";
 
+                }
             }
+            closedir($decksDir);
         }
-        closedir($decksDir);
-    }
-    ?>
+        ?>
+    </form>
 
-    <button type="button" style="background:darkred" onclick="window.location='import-deck.php'; ">
+    <button type="button" style="background:darkred" onclick="window.location='import-deck.php'; "
+            onmouseout="this.style.backgroundColor='darkred'"; onmouseover="this.style.backgroundColor='firebrick'">
         add new deck</button>
 
 

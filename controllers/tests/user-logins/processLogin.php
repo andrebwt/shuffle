@@ -75,6 +75,7 @@
                     if ((userFound($xml, $username)) && (passCorrect($xml, $username, $password))){
                         $do_login = true;
                     }
+
                     // Print message if the password entered is wrong
                     if ((userFound($xml, $username)) && !(passCorrect($xml, $username, $password))) {
                         echo '<input type="button" value = "WRONG PASSWORD!" style="background:darkred;color: #FFFFFF">';
