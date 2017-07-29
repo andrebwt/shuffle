@@ -15,7 +15,7 @@ $activeDeck = $_SESSION['activeDeck'];
 
 <body>
 
-<h1 class="page-heading">User Homepage</h1>
+<h1 class="page-heading">Deck Homepage</h1>
 <div class="divider"></div>
 
 <div class="status-info">
@@ -23,9 +23,14 @@ $activeDeck = $_SESSION['activeDeck'];
     <input type = "button" value="<?php echo $username . ' is logged in.';?>">
     <input type = "button" value="<?php echo $activeDeck . ' : is selected ';?>">
 
+    <!-- Draw a table-->
     <button type="button" onclick="window.location='choose-deck.php';">
         revise questions</button>
 
+    <button type="button" onclick="window.location='choose-deck.php';">
+        start testing</button>
+
+    <!-- Start study countdown, what session variables do I need to track>
     <button type="button" onclick="window.location='../../../views/tests/user-logins/user-logins.html';">
         test questions</button>
 

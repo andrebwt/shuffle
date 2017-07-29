@@ -49,36 +49,46 @@
 
     <body>
 
-
-        <div class="status-info">
-
-            <input type="button" value = 'PROCESSING LOGIN...' style="background:#4CAF50;color: #FFFFFF">
-
-            <input type = "button" value="<?php echo 'username entered: ' . $username;?>">
-            <input type = "button" value="<?php echo 'password entered: ' . $password;?>" />
-
             <?php
                 if(file_exists('../../../models/tests/user-logins/test-users.xml')){
 
-                    echo '<input type="button" value = "USER DATABASE EXISTS" style="background:#4CAF50;color: #FFFFFF">';
 
                     $xml = new SimpleXMLElement('../../../models/tests/user-logins/test-users.xml', 0, true);
-
-                    // Check user exists
-                    if (userFound($xml, $username)){
-                        echo '<input type="button" value = "USER FOUND" style="background:#4CAF50;color: #FFFFFF">';
-                    } else {
-                        echo '<input type="button" value = "USER NOT FOUND!" style="background:darkred;color: #FFFFFF">';
-                    }
 
                     // Login if the password is correct
                     if ((userFound($xml, $username)) && (passCorrect($xml, $username, $password))){
                         $do_login = true;
-                    }
+                    } else {
 
-                    // Print message if the password entered is wrong
-                    if ((userFound($xml, $username)) && !(passCorrect($xml, $username, $password))) {
-                        echo '<input type="button" value = "WRONG PASSWORD!" style="background:darkred;color: #FFFFFF">';
+                        echo '<div class="status-info">';
+
+                            // Print login information
+                            echo '<input type="button" value = "USER DATABASE EXISTS" style="background:#4CAF50;color: #FFFFFF">';
+
+                            // Check user exists
+                            if (userFound($xml, $username)) {
+                                echo '<input type="button" value = "USER FOUND" style="background:#4CAF50;color: #FFFFFF">';
+                            } else {
+                                echo '<input type="button" value = "USER NOT FOUND!" style="background:darkred;color: #FFFFFF">';
+                                echo "<input type = \"button\" name=\"active\" value = \"username entered: $username\" /><br> ";
+
+                            }
+
+                            // Print message if the password entered is wrong
+                            if ((userFound($xml, $username)) && !(passCorrect($xml, $username, $password))) {
+                                echo '<input type=button value = "WRONG PASSWORD!" style="background:darkred;color: #FFFFFF">';
+                                echo "<input type = \"button\" name=\"active\" value = \"username entered: $username\" /><br> ";
+                                echo "<input type = \"button\" name=\"active\" value = \"password entered: $password\" /><br> ";
+
+
+                            }
+
+                        echo '</div>';
+
+                        echo "<div class=\"status-info\">
+                            <button type=\"button\" onclick=\"window.location='../../../views/tests/user-logins/user-logins.html';\">try again</button>
+                        </div>";
+
                     }
 
                     // If the username and password are both correct, start a new session
@@ -90,14 +100,11 @@
                         die;
                     }
                 } else {
-                    echo '<input type="button" value = "USER DATABASE NOT FOUND!" style="background:darkred;color: #FFFFFF">';
+                    echo "<div class=\"status-info\">
+                        <input type=\"button\" value = \"USER DATABASE NOT FOUND!\" style=\"background:darkred;color: #FFFFFF\">
+                        <button type=\"button\" onclick=\"window.location='../../../views/tests/user-logins/user-logins.html';\">try again</button>
+                    </div>";
                 }
             ?>
-        </div>
-
-        <div class="status-info">
-            <button type="button" onclick="window.location='../../../views/tests/user-logins/user-logins.html';">
-                try again</button>
-        </div>
     </body>
 </html>
