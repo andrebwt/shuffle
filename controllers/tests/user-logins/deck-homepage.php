@@ -27,7 +27,7 @@ $activeDeck = $_SESSION['activeDeck'];
     <button type="button" onclick="window.location='choose-deck.php';">
         revise questions</button>
 
-    <button type="button" onclick="window.location='choose-deck.php';">
+    <button type="button" onclick="window.location='test-cards.php';">
         start testing</button>
 
     <!-- Start study countdown, what session variables do I need to track>

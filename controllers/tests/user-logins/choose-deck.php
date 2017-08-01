@@ -1,7 +1,7 @@
 <?php
 session_start();
 // Create new session variable
-//$_SESSION["activeDeck"] = "none";
+$_SESSION["activeDeck"] = "none";
 
 $username = $_SESSION['username'];
 $userFolder = $username . '/';
