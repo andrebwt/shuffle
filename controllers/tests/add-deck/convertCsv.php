@@ -5,13 +5,16 @@ $target_path = "./uploads/";
 $target_path = $target_path . basename( $_FILES['csv-file']['name']);
 
 $inputFile = $_FILES['csv-file']['tmp_name'];
-$outputFilename   = './decks/output.xml';
+
+// Takes name from input file for XML output file
+$nameWithoutExtension = substr($_FILES['csv-file']['name'], 0, -4);
+$outputFilename   = './decks/' . $nameWithoutExtension . '.xml';
 
 $tmp = fopen($_FILES['csv-file']['tmp_name'], 'rt');
 
-// New empty xml document with just deck tags
+// Creates new empty xml document with deck tags only
 $xml = new SimpleXMLElement('<?xml version="1.0" encoding="utf-8"?><deck></deck>');
-$headers = array('Rank', 'Question', 'Answer','TimesRepeated', 'ReviewDate');
+$headers = array('rank', 'question', 'answer','eFactor', 'due');
 $bom = pack("CCC", 0xef, 0xbb, 0xbf);
 
 while ( ($line = fgets($tmp)) !== false) {
@@ -28,13 +31,13 @@ while ( ($line = fgets($tmp)) !== false) {
     //$line = utf8_decode($line);
 
     //Remove newline from end of string
-    $line = str_replace(array("\n","\r"), '', $line) . ',testReviewVal';
+    $line = str_replace(array("\n","\r"), '', $line) . ',2.5' . ',none';
 
     //Separate data items
     $data = explode(",", $line);
     print_r($data);
 
-    for ($i = 0; $i <4; $i++) {
+    for ($i = 0; $i <5; $i++) {
         $card->addChild($headers[$i], $data[$i]);
     }
 }

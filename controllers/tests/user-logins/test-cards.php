@@ -1,5 +1,5 @@
 <?php
-include 'testing-functions.php';
+include 'unsorted-functions.php';
 session_start();
 
 
@@ -26,7 +26,12 @@ $activeCard = 'testing active';
 </script>
 
 <input type="button" style='float: right' value ='show/hide details' /><br>
-<?php echo getTodaysDate() ?>
+
+<!-- Test adding to date -->
+<?php echo 'today: ' . getTodaysDate() ?><br>
+<?php echo 'tomorrow: ' . addDays(1) ?><br>
+<?php echo 'in two days: ' .addDays(2) ?>
+
 
 <h1 class="page-heading">Test study card</h1>
     <div class="divider"></div>
