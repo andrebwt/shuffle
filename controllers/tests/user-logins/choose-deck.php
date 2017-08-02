@@ -41,11 +41,12 @@ $activeDeck = $_SESSION['activeDeck'];
         $decksDir = @opendir($deckLocation . $username . '/');
 
         if($decksDir){
-            while(($deck = readdir($decksDir)) !== false){
+            while(($deck = readdir($decksDir)) != false){
                 if($deck != '.' && $deck != '..' && $deck != '.htaccess'){
 
+                    $deckName = substr($deck, 0, -4);
                     //echo "<button onclick=\"window.location='$deckLocation$userFolder$deck'\">$deck</button><br>";
-                    echo "<button type = submit name=\"active\" value = $deck onclick=\"window.location='setDeck.php'\">$deck</button><br> ";
+                    echo "<button type = submit name=\"active\" value = $deck onclick=\"window.location='setDeck.php'\">$deckName</button><br> ";
 
                 }
             }
