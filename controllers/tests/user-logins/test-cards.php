@@ -1,8 +1,12 @@
 <?php
+include 'testing-functions.php';
 session_start();
+
+
 $username = $_SESSION['username'];
 $activeDeck = $_SESSION['activeDeck'];
-$activeCard = 'testing active'
+$activeCard = 'testing active';
+
 ?>
 
 <!DOCTYPE html>
@@ -22,6 +26,7 @@ $activeCard = 'testing active'
 </script>
 
 <input type="button" style='float: right' value ='show/hide details' /><br>
+<?php echo getTodaysDate() ?>
 
 <h1 class="page-heading">Test study card</h1>
     <div class="divider"></div>
