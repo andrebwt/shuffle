@@ -1,5 +1,8 @@
 <?php
+
+// Testing PHP functions here
 include 'unsorted-functions.php';
+
 session_start();
 
 
@@ -17,15 +20,18 @@ $activeCard = 'testing active';
     <title>Test Features</title>
     <link rel="stylesheet" type="text/css" href="../../../views/styles.css">
     <script src="../../../views/tests/countdown/countdown.js"></script>
+    <script src="reveal.js"></script>
+
 </head>
 
 <body>
 
 <script>
+
     countdown();
 </script>
 
-<input type="button" style='float: right' value ='show/hide details' /><br>
+<input type="button" style='float: right' value ='show/hide details' onclick="hideDiv()"/><br>
 
 <!-- Test adding to date -->
 <?php echo 'today: ' . getTodaysDate() ?><br>
@@ -60,7 +66,7 @@ $activeCard = 'testing active';
 
     <div id = "showHide">
 
-        test
+        can you show and hide me?
 
     </div>
 
