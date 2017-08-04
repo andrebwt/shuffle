@@ -14,7 +14,7 @@ $tmp = fopen($_FILES['csv-file']['tmp_name'], 'rt');
 
 // Creates new empty xml document with deck tags only
 $xml = new SimpleXMLElement('<?xml version="1.0" encoding="utf-8"?><deck></deck>');
-$headers = array('rank', 'question', 'answer','eFactor', 'due');
+$headers = array('rank', 'question', 'answer', 'new', 'eFactor', 'due');
 $bom = pack("CCC", 0xef, 0xbb, 0xbf);
 
 while ( ($line = fgets($tmp)) !== false) {
@@ -31,13 +31,13 @@ while ( ($line = fgets($tmp)) !== false) {
     //$line = utf8_decode($line);
 
     //Remove newline from end of string
-    $line = str_replace(array("\n","\r"), '', $line) . ',2.5' . ',none';
+    $line = str_replace(array("\n","\r"), '', $line) . ',true' . ',2.5' . ',none';
 
     //Separate data items
     $data = explode(",", $line);
     print_r($data);
 
-    for ($i = 0; $i <5; $i++) {
+    for ($i = 0; $i <6; $i++) {
         $card->addChild($headers[$i], $data[$i]);
     }
 }

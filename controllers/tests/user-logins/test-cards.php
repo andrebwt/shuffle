@@ -4,11 +4,14 @@
 include 'unsorted-functions.php';
 
 session_start();
-
-
 $username = $_SESSION['username'];
 $activeDeck = $_SESSION['activeDeck'];
-$activeCard = 'testing active';
+
+$_SESSION['activeCard'] = firstNewCard($activeDeck);
+$activeCard = $_SESSION['activeCard'];
+
+
+
 
 ?>
 
@@ -33,10 +36,7 @@ $activeCard = 'testing active';
 
 <input type="button" style='float: right' value ='show/hide details' onclick="hideDiv()"/><br>
 
-<!-- Test adding to date -->
-<?php echo 'today: ' . getTodaysDate() ?><br>
-<?php echo 'tomorrow: ' . addDays(1) ?><br>
-<?php echo 'in two days: ' .addDays(2) ?>
+
 
 
 <h1 class="page-heading">Test study card</h1>
@@ -66,7 +66,13 @@ $activeCard = 'testing active';
 
     <div id = "showHide">
 
-        can you show and hide me?
+        ===============================<br><br>
+        <?php echo 'ACTIVE DECK: ' . $activeDeck?><br>
+        <?php echo 'ACTIVE CARD: ' . $activeCard?><br><br>
+
+        <button type="submit">next new card</button>
+
+
 
     </div>
 
