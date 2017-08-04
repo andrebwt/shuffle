@@ -4,13 +4,15 @@
 include 'unsorted-functions.php';
 
 session_start();
+
+// Declare new session variable
+$_SESSION['activeCard'];
+
 $username = $_SESSION['username'];
 $activeDeck = $_SESSION['activeDeck'];
-
-$_SESSION['activeCard'] = firstNewCard($activeDeck);
 $activeCard = $_SESSION['activeCard'];
 
-
+$activeQuestion = getField($activeDeck, $activeCard, 'question')
 
 
 ?>
@@ -22,6 +24,9 @@ $activeCard = $_SESSION['activeCard'];
     <meta charset="UTF-8">
     <title>Test Features</title>
     <link rel="stylesheet" type="text/css" href="../../../views/styles.css">
+
+    <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+
     <script src="../../../views/tests/countdown/countdown.js"></script>
     <script src="reveal.js"></script>
 
@@ -30,11 +35,10 @@ $activeCard = $_SESSION['activeCard'];
 <body>
 
 <script>
-
     countdown();
 </script>
 
-<input type="button" style='float: right' value ='show/hide details' onclick="hideDiv()"/><br>
+<input type="button" style='float: right' value ='show/hide details and tools' onclick="hideDiv()"/><br>
 
 
 
@@ -47,7 +51,9 @@ $activeCard = $_SESSION['activeCard'];
         <form action="../../../controllers/tests/countdown/processAnswer.php" method="post">
 
             <input type = "button" value="PLEASE TRANSLATE" style="background:#006db9; color: white">
-            <input type = "button"  style="background:#006db9; color: white" value="<?php echo '\'' . $activeCard . '\'';?>">
+
+            <input type = "button"
+                   style="background:#006db9; color: white" value="<?php echo '\'' . $activeQuestion . '\'';?>">
 
 
 
@@ -68,9 +74,46 @@ $activeCard = $_SESSION['activeCard'];
 
         ===============================<br><br>
         <?php echo 'ACTIVE DECK: ' . $activeDeck?><br>
-        <?php echo 'ACTIVE CARD: ' . $activeCard?><br><br>
+        <?php echo 'ACTIVE CARD: ' . $activeCard?><br>
 
-        <button type="submit">next new card</button>
+
+        <!--<?php echo 'NEW CARD STILL TO TEST: ' . newCardsTotal($activeDeck)?><br>-->
+        <?php echo 'NEW CARDS IN DECK: ' . newCardsTotal($activeDeck)?><br><br>
+
+        <form onsubmit="loadCard()" method="post">
+
+        <button type="submit" >next new card</button>
+
+        </form><br><br>
+
+
+
+
+
+        <form">
+            <input id="testSubmit" type="submit" value="Submit">
+        </form>
+
+        <script>
+            var submit_button = $('#testSubmit');
+
+            submit_button.click(function() {
+
+               //window.alert("did you click?");
+               var update_div = $('#update_div');
+
+                $.ajax({
+                    type: 'GET',
+                    url: 'process_form.php',
+                    success: function(response) {
+                       //alert(response);
+                        update_div.html(response);
+                    }
+                });
+            });
+        </script>
+
+        <div id="update_div"></div>
 
 
 
