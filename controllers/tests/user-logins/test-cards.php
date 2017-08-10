@@ -104,7 +104,7 @@ $activeQuestion = getField($activeDeck, $activeCard, 'question')
 
                 $.ajax({
                     type: 'GET',
-                    url: 'process_form.php',
+                    url: '../countdown/process_form.php',
                     success: function(response) {
                        //alert(response);
                         update_div.html(response);
