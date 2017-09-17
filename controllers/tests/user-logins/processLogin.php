@@ -60,7 +60,7 @@
                         $do_login = true;
                     } else {
 
-                        echo '<div class="status-info">';
+                        echo '<div class="global-style">';
 
                             // Print login information
                             echo '<input type="button" value = "USER DATABASE EXISTS" style="background:#4CAF50;color: #FFFFFF">';
